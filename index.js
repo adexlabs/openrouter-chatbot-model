@@ -12,6 +12,10 @@ app.use(express.json());
 // serve frontend files
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/chat.html");
+});
+
 app.post("/chat", async (req, res) => {
   try {
 
