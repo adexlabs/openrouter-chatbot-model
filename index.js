@@ -14,6 +14,12 @@ const path = require("path");
 // serve frontend files
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+console.log(process.env.OPENROUTER_API_KEY);
+
 app.post("/chat", async (req, res) => {
   try {
 
