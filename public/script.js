@@ -1,76 +1,64 @@
-async function sendMessage() {
+const input =
+document.getElementById("message");
 
-  const input =
-    document.getElementById("message");
+input.addEventListener(
+    "keypress",
+    function(e){
+        if(e.key==="Enter"){
+            sendMessage();
+        }
+    }
+);
 
-  const message =
+async function sendMessage(){
+
+    const msg =
     input.value.trim();
 
-  if (!message) return;
+    if(!msg) return;
 
-  const chatBox =
-    document.getElementById("chat-box");
+    const chat =
+    document.getElementById("chat");
 
-  chatBox.innerHTML +=
-    `<p><b>You:</b> ${message}</p>`;
+    chat.innerHTML += `
+        <div class="user-message">
+            <span>${msg}</span>
+        </div>
+    `;
 
-  input.value = "";
+    input.value="";
 
-  const loadingId =
-    "loading-" + Date.now();
+    try{
 
-  chatBox.innerHTML += `
-    <p id="${loadingId}">
-      <b>Bot:</b>
-      <span class="spinner"></span>
-    </p>
-  `;
+        const response =
+        await fetch("/api/chat",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                message:msg
+            })
+        });
 
-  try {
+        const data =
+        await response.json();
 
-    const response =
-      await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
-          message
-        })
-      });
+        chat.innerHTML += `
+            <div class="bot-message">
+                <span>${data.reply}</span>
+            </div>
+        `;
 
-    const data =
-      await response.json();
+    }catch(error){
 
-    document.getElementById(
-      loadingId
-    ).innerHTML =
-      `<b>Bot:</b> ${data.reply || data.error
-      }`;
-
-  } catch (error) {
-
-    document.getElementById(
-      loadingId
-    ).innerHTML =
-      "<b>Bot:</b> Error";
-
-  }
-
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
-}
-
-document
-  .getElementById("message")
-  .addEventListener(
-    "keypress",
-    function (event) {
-
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-
+        chat.innerHTML += `
+            <div class="bot-message">
+                <span>Server Error</span>
+            </div>
+        `;
     }
-  );
+
+    chat.scrollTop =
+    chat.scrollHeight;
+}

@@ -2,7 +2,7 @@ export default async function handler(req, res) {
 
     if (req.method !== "POST") {
         return res.status(405).json({
-            error: "Method not allowed"
+            error: "Method Not Allowed"
         });
     }
 
@@ -15,7 +15,8 @@ export default async function handler(req, res) {
             {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                    "Authorization":
+                        `Bearer ${process.env.OPENROUTER_API_KEY}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
@@ -34,14 +35,10 @@ export default async function handler(req, res) {
 
         console.log(data);
 
-        if (!response.ok) {
-            return res.status(500).json(data);
-        }
-
         return res.status(200).json({
             reply:
                 data.choices?.[0]?.message?.content ||
-                "No response received"
+                "No response from AI"
         });
 
     } catch (error) {
@@ -49,9 +46,7 @@ export default async function handler(req, res) {
         console.error(error);
 
         return res.status(500).json({
-            error: error.message
+            reply: "Server Error"
         });
-
     }
-
 }
