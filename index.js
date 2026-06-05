@@ -12,6 +12,12 @@ app.use(express.json());
 // serve frontend files
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+console.log(process.env.OPENROUTER_API_KEY);
+
 app.post("/chat", async (req, res) => {
   try {
 
@@ -26,7 +32,7 @@ app.post("/chat", async (req, res) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "openrouter/auto",
+          model: "deepseek/deepseek-r1:free",
           messages: [
             {
               role: "user",
@@ -39,10 +45,16 @@ app.post("/chat", async (req, res) => {
 
     const data = await response.json();
 
-    console.log(data);
+    console.log("OpenRouter Response:", data);
+
+    if (!response.ok) {
+      return res.status(500).json({
+        error: data
+      });
+    }
 
     res.json({
-      reply: data.choices[0].message.content
+      reply: data.choices?.[0]?.message?.content || "No response"
     });
 
   } catch (error) {
