@@ -35,13 +35,9 @@ async function sendMessage() {
         "loading-" + Date.now();
 
     chat.innerHTML += `
-    <div
-      class="bot-message"
-      id="${loadingId}"
-    >
-      <span class="spinner"></span>
-    </div>
-  `;
+    <div class="loader-message" id="${loadingId}">
+        <span class="spinner"></span>
+    </div>`;
 
     try {
 
