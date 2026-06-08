@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 500px;
+    max-width: 95%;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+}
+
+h2 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#chat {
+    height: 450px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background: #fafafa;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    text-align: right;
+    margin: 10px 0;
+}
+
+.user-message span {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 80%;
+}
+
+.bot-message {
+    text-align: left;
+    margin: 10px 0;
+}
+
+.bot-message span {
+    background: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 80%;
+    white-space: pre-wrap;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+#message {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #ccc;
+    border-top: 3px solid #333;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
