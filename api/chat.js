@@ -40,7 +40,7 @@ export default async function handler(req, res) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "openai/gpt-4o",
+          model: "deepseek/deepseek-r1",
           messages: [
             {
               role: "system",
